@@ -1,10 +1,14 @@
-module github.com/Sistemas-Distribuidos-2023-02/Grupo27-Laboratorio-1
+module github.com/MetalDanyboy/Lab1
 
 go 1.18
 
 require (
+	github.com/rabbitmq/amqp091-go v1.8.1
+	github.com/streadway/amqp v1.1.0
+)
+
+require (
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/rabbitmq/amqp091-go v1.8.1 // indirect
 	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect

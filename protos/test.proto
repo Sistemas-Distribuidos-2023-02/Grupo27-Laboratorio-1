@@ -21,13 +21,13 @@ message UserRegionReply{ // Regional -> Central "ok"
 }
 
 message NumberRequest{
-  int64 number = 1;
+  string notification = 1;
 }
-
 
 message NumberResponse{
   string result = 1;
 }
+
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
   rpc UserRegion (UserRegionRequest) returns (UserRegionReply) {}
