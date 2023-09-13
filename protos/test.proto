@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option go_package = "github.com/Sistemas-Distribuidos-2023-02/Grupo27-Laboratorio-1";
+package protos;
+
+message HelloRequest {
+  string name = 1;  
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+message UserRegionRequest{ // Central -> Regional "tengo llaves"
+  string notification = 1;
+}
+
+message UserRegionReply{ // Regional -> Central "ok"
+  //int32 cant_users = 1;
+  string verificacion = 1;
+}
+
+message NumberRequest{
+  int64 number = 1;
+}
+
+
+message NumberResponse{
+  string result = 1;
+}
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc UserRegion (UserRegionRequest) returns (UserRegionReply) {}
+}
+
+service Interesados{
+  rpc Registrados (NumberRequest) returns (NumberResponse) {}
+}
