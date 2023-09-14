@@ -28,6 +28,14 @@ message NumberResponse{
   string result = 1;
 }
 
+message Message {
+  string body = 1;
+}
+
+service ChatService {
+  rpc SayHello(Message) returns (Message) {}
+}
+
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
   rpc UserRegion (UserRegionRequest) returns (UserRegionReply) {}
