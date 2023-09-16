@@ -113,6 +113,18 @@ func ConexionGRPC(mensaje string, servidor string , wg *sync.WaitGroup){
 
 var num_cola int
 
+func esperarHastaCuatro(canal chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	
+	for {
+		valor := <-canal
+		if valor == 4 {
+			break
+		}
+	}
+}
+
+
 func main() {
 	num_cola=0
 	rand.Seed(time.Now().UnixNano())
@@ -199,9 +211,12 @@ func main() {
 			wg.Wait()
 		
 			//Mensaje Rabbit
-			var wg2 sync.WaitGroup
 			forever := make(chan bool)
-			wg2.Add(1)
+			var wg sync.WaitGroup
+			canal := make(chan int)
+
+			wg.Add(1)
+			go esperarHastaCuatro(canal, &wg)
 			go func() {
 				//num_cola:=0
 				//var wg3 sync.WaitGroup
@@ -218,16 +233,13 @@ func main() {
 					}
 
 					fmt.Printf("Mensaje asíncrono de servidor %s leído\n", subcadenas[0])
-					/*wg3.Add(1)
-					go ConexionGRPC2(llaves_pedidas,subcadenas[0], &wg3)
-					wg3.Wait()*/
 					ConexionGRPC2(llaves_pedidas,subcadenas[0])
 
 					forever <- true
 					fmt.Printf("Se inscribieron %d cupos de servidor %s\n", llaves_pedidas, subcadenas[0])
 				}
-				time.Sleep(5 * time.Second)
-				defer wg2.Done()
+				//time.Sleep(5 * time.Second)
+				//defer wg2.Done()
 			}()
 			wg2.Wait()
 			fmt.Println("Waiting for messages...")
@@ -235,12 +247,10 @@ func main() {
 
 			if num_cola >=4 {
 				num_cola=0
-				continue
-			}else{
-				time.Sleep(5 * time.Second)
+				canal <- i
 			}
-				
+			close(canal)
+			wg.Wait()	
 		}
 	defer log.Println("Closing Central. . .\n")
 }
-
