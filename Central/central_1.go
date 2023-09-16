@@ -198,7 +198,7 @@ func main() {
 			go func() {
 				num_cola:=0
 				for msg := range msgs {
-					fmt.Printf("Received Message: %s\n", msg.Body)
+					//fmt.Printf("Received Message: %s\n", msg.Body)
 					subcadenas := strings.Split(string(msg.Body), "-")
 					
 					llaves_pedidas,_:=strconv.Atoi(subcadenas[1])
@@ -229,11 +229,10 @@ func main() {
 						fmt.Printf("No entre a ningun if")
 					}
 
-					fmt.Printf("Se inscribieron %d cupos de servidor /s", llaves_pedidas, subcadenas[0]))
+					fmt.Printf("Se inscribieron %d cupos de servidor %s", llaves_pedidas, subcadenas[0]))
 					
 					num_cola++
-					if num_cola == 1{
-						
+					if num_cola == 4{
 						forever <- true
 					}
 				}
