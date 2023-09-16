@@ -76,8 +76,9 @@ func (s *Server) SayHello(ctx context.Context, in *pb.Message) (*pb.Message, err
 }
 
 func(s *Server) SendKeys(ctx context.Context, in *pb.NumberRequest) (*pb.NumberResponse, error) {
-	log.Printf("Receive Keys from client: %d", in.Number)
+	log.Printf("Se inscribieron %d personas", in.Number)
 	cant_registrados-=int(in.Number)
+	log.Printf("Quedan %d personas en espera de cupo", cant_registrados)
 	return &pb.NumberResponse{Response: "OK"}, nil
 
 }
@@ -99,6 +100,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Printf("Hay %d personas interesadas en acceder a la beta\n",cant_registrados)
 	cant_llaves_pedidas=0
 	
 	
