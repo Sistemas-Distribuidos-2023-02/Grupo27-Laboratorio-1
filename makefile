@@ -14,16 +14,16 @@ endif
 docker-regional:
 ifeq ($(HOST),localhost)
 	docker rm -f regional
-	docker run -d -it --rm --name regional -p 50052:50052 --expose 50052 lab1:latest go run Regionales/America/regional.go
+	docker run -d -it --rm --name regional -p 50052:50052 --expose 50052 lab1:latest go run Grupo27-Laboratorio-1/Regionales/America/regional.go
 endif
 ifeq ($(HOST),dist106)
-	docker run -it --rm --name regional -p 50053:50053 --expose 50053 lab1:latest go run Regionales/Asia/regional.go
+	docker run -it --rm --name regional -p 50053:50053 --expose 50053 lab1:latest go run Grupo27-Laboratorio-1/Regionales/Asia/regional.go
 endif
 ifeq ($(HOST),dist107)
-	docker run -it --rm --name regional -p 50054:50054 --expose 50054 lab1:latest go run Regionales/Europa/regional.go
+	docker run -it --rm --name regional -p 50054:50054 --expose 50054 lab1:latest go run Grupo27-Laboratorio-1/Regionales/Europa/regional.go
 endif
 ifeq ($(HOST),dist108)
-	docker run  -it --rm --name regional -p 50055:50055 --expose 50055 lab1:latest go run Regionales/Oceania/regional.go
+	docker run  -it --rm --name regional -p 50055:50055 --expose 50055 lab1:latest go run Grupo27-Laboratorio-1/Regionales/Oceania/regional.go
 endif
 
 docker-rabbit:
