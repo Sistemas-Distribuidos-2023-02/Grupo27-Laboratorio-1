@@ -4,7 +4,7 @@
 // - protoc             v4.24.3
 // source: protos/test.proto
 
-package Lab1
+package Grupo27_Laboratorio_1
 
 import (
 	context "context"
