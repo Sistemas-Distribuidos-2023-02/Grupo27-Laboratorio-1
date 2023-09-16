@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	pb "github.com/MetalDanyboy/Lab1/protos"
+	pb "github.com/Sistemas-Distribuidos-2023-02/Grupo27-Laboratorio-1/protos"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"google.golang.org/grpc"
 )
@@ -102,7 +102,7 @@ func main() {
 	cant_llaves_pedidas=0
 	
 	
-	server_name = "Asia"
+	server_name = "Europa"
 	//addr_Rabbit := "localhost"
 	addr_Rabbit := "dist106.inf.santiago.usm.cl"
 	connection, err := amqp.Dial("amqp://guest:guest@" + addr_Rabbit + ":5672/")
@@ -131,7 +131,7 @@ func main() {
 		panic(err)
 	}
 
-	puerto := ":50053"
+	puerto := ":50054"
 	lis, err := net.Listen("tcp", puerto)
 	fmt.Printf("Escuchando %s\n", puerto)
 	if err != nil {
