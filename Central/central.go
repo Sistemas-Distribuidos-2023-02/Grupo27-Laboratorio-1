@@ -117,7 +117,7 @@ func esperarHastaCuatro(canal chan int, wg *sync.WaitGroup) {
 		num_cola++
 	}
 }
-
+var num_cola int
 func main() {
 	// ... (código anterior sin cambios)
 
