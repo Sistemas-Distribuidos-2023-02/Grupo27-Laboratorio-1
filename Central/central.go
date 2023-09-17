@@ -185,46 +185,30 @@ func main() {
 	var llaves int
 	for {
 		contador++
-		if iterations != -1 {
-			if contador == iterations+1 {
-				break
-			}
+		if iterations != -1 && contador > iterations {
+			break
 		}
 
-		if iterations == -1 {
-			fmt.Printf("\nGeneración %d/infinito\n", contador)
-		} else {
-			fmt.Printf("\nGeneración %d/%d\n", contador, iterations)
-		}
+		fmt.Printf("\nGeneración %d/%d\n", contador, iterations)
+
 		llaves = rand.Intn(max-min) + min
-
 		log.Printf("Llaves disponibles: %d\n\n", llaves)
 
 		var wg sync.WaitGroup
-		wg.Add(1)
-		go ConexionGRPC("LLaves Disponibles", "America", &wg)
-		wg.Add(1)
-		go ConexionGRPC("LLaves Disponibles", "Asia", &wg)
-		wg.Add(1)
-		go ConexionGRPC("LLaves Disponibles", "Europa", &wg)
-		wg.Add(1)
-		go ConexionGRPC("LLaves Disponibles", "Oceania", &wg)
+		for _, servidor := range []string{"America", "Asia", "Europa", "Oceania"} {
+			wg.Add(1)
+			go func(servidor string) {
+				defer wg.Done()
+				ConexionGRPC("LLaves Disponibles", servidor, &wg)
+			}(servidor)
+		}
 		wg.Wait()
 
-		//Mensaje Rabbit
-		forever := make(chan bool)
-		var wg2 sync.WaitGroup
-		canal := make(chan int)
-
-		wg2.Add(1)
-		go esperarHastaCuatro(canal, &wg2)
-		go func() {
-			//num_cola:=0
-			//var wg3 sync.WaitGroup
-			for msg := range msgs {
-				fmt.Printf("Received Message: %s\n", msg.Body)
+		// Mensaje Rabbit
+		for i := 0; i < 4; i++ {
+			select {
+			case msg := <-msgs:
 				subcadenas := strings.Split(string(msg.Body), "-")
-
 				llaves_pedidas, _ := strconv.Atoi(subcadenas[1])
 				if llaves_pedidas > llaves {
 					llaves_pedidas = llaves
@@ -236,23 +220,12 @@ func main() {
 				fmt.Printf("Mensaje asíncrono de servidor %s leído\n", subcadenas[0])
 				ConexionGRPC2(llaves_pedidas, subcadenas[0])
 
-				forever <- true
 				fmt.Printf("Se inscribieron %d cupos de servidor %s\n", llaves_pedidas, subcadenas[0])
+			default:
+				break
 			}
-			//time.Sleep(5 * time.Second)
-			//defer wg2.Done()
-		}()
-		//wg2.Wait()
-		fmt.Println("Waiting for messages...")
-		<-forever
-
-		if num_cola >= 4 {
-			canal <- num_cola
-			num_cola = 0
 		}
-		close(canal)
-		wg2.Wait()
 	}
 
-	defer log.Println("Closing Central. . .\n")
+	log.Println("Closing Central. . .\n")
 }
