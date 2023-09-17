@@ -223,6 +223,9 @@ func main() {
 
 					fmt.Printf("Mensaje asíncrono de servidor %s leído\n", subcadenas[0])
 					go ConexionGRPC2(llaves_pedidas,subcadenas[0])
+					if contador == iterations+1{
+						forever <- true
+					}
 					if num_cola == 4{
 						forever <- true
 						num_cola = 0
