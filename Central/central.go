@@ -222,7 +222,7 @@ func main() {
 					}
 
 					fmt.Printf("Mensaje asíncrono de servidor %s leído\n", subcadenas[0])
-					ConexionGRPC2(llaves_pedidas,subcadenas[0])
+					go ConexionGRPC2(llaves_pedidas,subcadenas[0])
 					//if contador == iterations+1{
 						//forever <- true
 					//}
