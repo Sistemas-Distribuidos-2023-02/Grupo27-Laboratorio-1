@@ -55,5 +55,8 @@ ejectuar en la dist105:
 ```
 docker logs-central
 ```
-
+6. Una vez terminadas todas las iteraciones:
+```
+Cerrar con control-c
+```
 
