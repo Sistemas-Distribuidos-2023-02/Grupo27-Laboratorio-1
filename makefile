@@ -1,6 +1,5 @@
 clean:
-	docker rm  -f $(docker ps -aq)
-        docker rmi -f $(docker images -q)
+	./clean.sh
 HOST = $(shell hostname)
 build:
 	docker build -t lab1:latest .
