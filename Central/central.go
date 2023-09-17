@@ -212,11 +212,11 @@ func main() {
 		
 			//Mensaje Rabbit
 			forever := make(chan bool)
-			var wg sync.WaitGroup
+			var wg2 sync.WaitGroup
 			canal := make(chan int)
 
-			wg.Add(1)
-			go esperarHastaCuatro(canal, &wg)
+			wg2.Add(1)
+			go esperarHastaCuatro(canal, &wg2)
 			go func() {
 				//num_cola:=0
 				//var wg3 sync.WaitGroup
@@ -241,16 +241,16 @@ func main() {
 				//time.Sleep(5 * time.Second)
 				//defer wg2.Done()
 			}()
-			wg2.Wait()
+			//wg2.Wait()
 			fmt.Println("Waiting for messages...")
 			<-forever
 
 			if num_cola >=4 {
+				canal <- num_cola
 				num_cola=0
-				canal <- i
 			}
 			close(canal)
-			wg.Wait()	
+			wg2.Wait()	
 		}
 	defer log.Println("Closing Central. . .\n")
 }
