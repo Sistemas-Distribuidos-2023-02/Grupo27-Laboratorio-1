@@ -226,12 +226,13 @@ func main() {
 					//if contador == iterations+1{
 						//forever <- true
 					//}
+					fmt.Printf("Se inscribieron %d cupos de servidor %s\n", llaves_pedidas, subcadenas[0])
 					if num_cola == 4{
 						forever <- true
 						num_cola = 0
 					}
 					
-					fmt.Printf("Se inscribieron %d cupos de servidor %s\n", llaves_pedidas, subcadenas[0])
+					
 					
 				}
 				//time.Sleep(5 * time.Second)
